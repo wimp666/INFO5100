@@ -1,23 +1,36 @@
-//assignment1
+//assignment1 by Weiyang Qian
 Design a vending Machine (will accept coins of different denominations and vends out candies, soda etc)
 
 Customers can 
 1. search for goods;
 2. Choose goods and pay by coins;
+3. cancel shopping
 
 -------------------------------------------------------------------------------------------------------------
 Class: Customer
-State: name, coins
-Behaviour: searchGoods(Goods goods) {
-	Boolean haveGoods = Machine.search(goods); //display whether have goods wanted
+
+State: name, coins, requirement, cancelStatus
+
+Behaviour: seeLists() {
+	return Machine.goodsList;
+	//see all the goods;
 }
+
+Behaviour: checkGoods(Goods goods) {
+	Boolean haveGoods = Machine.search(goods); 
+	//display whether have goods wanted
+}
+
 Behaviour: choose(Goods goods) {
 	if (goods.checkAvailability() >= 1) {
 	    return goods.price;
+	    //if goods available, return price of goods
 	}else{
 	    return 0;
+	    //there is no goods required
 	}
 }
+
 Behaviour: pay(Goods goods) {
 	int paied;
 	while(paied < goods.price) {
@@ -25,10 +38,21 @@ Behaviour: pay(Goods goods) {
 	    if(coin.number >= 1){
 	        coin.number -= 1;
 	        paied += coin.value;
+	        //customers pay one coin a time
+	    }
+	    if(cancelStatus()){
+	        //return money , in amount of paied
+	        return;  // end this function
 	    }
 	}
+	goods.number -= 1;
 	machine.charge();
 	//get goods;
+}
+
+Behaviour: cancelStatus(cancel) {
+	//the customer suddenly want to cancel
+	return true;
 }
 
 -------------------------------------------------------------------------------------------------------------
@@ -37,7 +61,9 @@ State: number, value
 
 -------------------------------------------------------------------------------------------------------------
 Class: Goods
+
 State: name, price, numbers
+
 Behaviour: checkAvailability(){
 	return this.numbers;
 }
@@ -46,6 +72,7 @@ Behaviour: checkAvailability(){
 Class: Machine
 
 List<Goods> goodsList;
+
 Behaviour: addGoods(Goods goods, int numberAdded) {
     if(goodsList.contain(goods)){
         goods.numbers += numberAdded;
@@ -54,12 +81,14 @@ Behaviour: addGoods(Goods goods, int numberAdded) {
         goods.number = numberAdded;
     }
 }
+
 Behaviour: search(Goods goods) {
 	For(Goods i : goodsList) {
-	if(i.equals(goods) && i.number >= 1)
-	    return true;
+	    if(i.equals(goods) && i.number >= 1)
+	        return true;
 	}
 }
+
 Behaviour: charge() {
 	return goods.price - paied;
 }
