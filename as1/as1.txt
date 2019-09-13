@@ -1,4 +1,172 @@
 //assignment1 by Weiyang Qian
+
+************************************************************************************************************
+Design a Traffic Controller System for a Junction
+
+Cars can
+1. stop & move;
+
+-------------------------------------------------------------------------------------------------------------
+Class: EnterGate
+
+State: Boolean openOrClose
+
+Behaviour: open() {
+	// cars can enter in a speed of 2 cars per loop(for example)
+	openOrClose = True;
+}
+
+Behaviour: close() {
+	//no cars can enter
+	openOrClose = False;
+}
+
+-------------------------------------------------------------------------------------------------------------
+Class: ExitGate
+
+State: exitSpeed = 1; //1 car per loop(for example)
+
+------------------------------------------------------------------------------------------------------------
+Class: Road
+
+State: carsInsideRoad
+
+Behaviour: haveTraficJam() {
+	if(carsInsideRoad >= 300)
+	    return True;
+	return False;
+}
+
+-------------------------------------------------------------------------------------------------------------
+Class: ControlSystem
+
+//Behaviours behind runs in a while loop which will runs forever in main function
+
+Behaviour: openGate() {
+	if(!Road.haveTraficJam) {
+	    EnterGate.open();
+	    Road.carsInsideRoad += 1;
+	}else{
+	    closeGate();
+	}
+}
+
+Behaviour: closeGate() {
+	EnterGate.close();
+	Road.carsInsideRoad -= 1;
+}
+
+************************************************************************************************************
+Design a Car Rental System
+
+Renters can
+1. rent a car
+2. return a car
+3. watch car list
+
+------------------------------------------------------------------------------------------------------------
+Class: Car
+
+State: Boolean inGoodCondition, rented, price, renter
+
+------------------------------------------------------------------------------------------------------------
+Class: CarRentalSystem
+
+State: fine
+
+Behaviour: checkCar(car){
+    if(good){
+        car.inGoodCondition = True;
+    }else{
+        car.inGoodCondition = False;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------
+Class: Renter
+
+State: money
+
+Behaviour: rent(car) {
+	if(!car.rented && car.inGoodCondition) {
+	    //rent successfully;
+	    car.renter = this.renter;
+	    car.rented = True;
+	}
+}
+
+Behaviour: watchCarList() {
+	return carList;
+}
+
+Behaviour: return(car) {
+    checkCar();
+	if(car.renter == this.renter && car.inGoodCondition){
+	    money -= car.price;
+	    car.rented = False;
+	}else if(car.renter == this.renter && !car.inGoodCondition){
+        money = money - fine - car.price;
+        car.rented = False;
+	}else{
+	    System.out.println("wrong car!");
+	}
+}
+
+************************************************************************************************************
+Design a Course Registration Platform
+
+Students can
+1.search for a course
+2.register for a course
+3.withdraw a course
+
+-------------------------------------------------------------------------------------------------------------
+Class: course
+
+State: numberRegistered, numberAvailable, creditHour, ID
+
+//Saved in HashMap courseMap, key is course ID, value is list of IDs of registed students
+
+------------------------------------------------------------------------------------------------------------
+Class: student
+
+State: ID, creditHourSelected, maxCredit, minCredit
+
+Behaviour: search(course) {
+	if(courseMap.containsKey(ID) && course.numberRegistered < course.numberAvailable){
+	    System.out.println("available");
+	    return True;
+	}else{
+	    System.out.println("full, please check later!");
+	    return False;
+	}
+}
+
+Behaviour: register(course) {
+    if(search(course) && student.creditHourSelected + course.creditHour <= student.maxCredit){
+        courseMap.get(course.ID).add(student.ID);
+        course.numberRegistered++;
+        student.creditHourSelected += course.creditHour;
+    }else{
+        return;
+    }
+}
+
+Behaviour: withdraw(course) {
+	if(!courseMap.get(ID).contains(student.ID)) {
+	    System.out.println("hasn't registed this course");
+        return;
+	}else if(student.creditHourSelected - course.creditHour >= student.minCredit){
+        courseMap.get(course.ID).remove(student.ID);
+        course.numberRegistered--;
+        student.creditHourSelected -= course.creditHour;
+	}else{
+	    System.out.println("you should register more than", student.minCredit, "credit hours!");
+	}
+}
+
+
+************************************************************************************************************
 Design a vending Machine (will accept coins of different denominations and vends out candies, soda etc)
 
 Customers can 
@@ -92,3 +260,9 @@ Behaviour: search(Goods goods) {
 Behaviour: charge() {
 	return goods.price - paied;
 }
+
+*************************************************************************************************************
+Design a Parking lot
+
+
+
