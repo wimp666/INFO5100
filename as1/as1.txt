@@ -264,5 +264,35 @@ Behaviour: charge() {
 *************************************************************************************************************
 Design a Parking lot
 
+Cars can:
+1.enter
+2.exit
+
+-------------------------------------------------------------------------------------------------------------
+Class: ParkingLot
+
+State: total, empty, Boolean isFull
+
+//empty = total (at first)
+
+-------------------------------------------------------------------------------------------------------------
+Class: car
+
+Behaviour: enter() {
+	if(!ParkigLot.isFull) {
+        empty--;
+        if(empty == 0){
+            isFull = True;
+        }
+	}
+}
+
+Behaviour: exit() {
+	empty++;
+	if(isFull){
+	    isFull = False;
+	}
+}
+
 
 
