@@ -9,8 +9,13 @@ public class Assignment2 {
         Note: Employee array is passed, not employee
      */
     public double salaryGreaterThanFiveThousand(Employee[] employees) {
-        // @TODO
-        return 0.0;
+        double sum = 0.0;
+        for(Employee i: employees) {
+        	if(i.getSalary() > 5000) {
+        		sum += i.getSalary();
+        	}
+        }
+        return sum;
     }
 
     
@@ -21,7 +26,14 @@ public class Assignment2 {
         "FizzBuzz" - if id of employee is divisible by both 3 and 5
      */
     public void fizzBuzz(Employee employee) {
-        // @TODO
+        int id = employee.getId();
+        if(id % 3 == 0 && id % 5 == 0) {
+        	System.out.println("FizzBuzz");
+        }else if(id % 3 == 0) {
+        	System.out.println("Fizz");
+        }else if(id % 5 == 0) {
+        	System.out.println("Buzz");
+        }
     }
 
     
@@ -32,8 +44,15 @@ public class Assignment2 {
         If salary of employee is greater than 5000, tax should be 35%
     */
     public double calculateTax(Employee employee) {
-        // @TODO
-        return 0.0;
+        double tax = 0.0;
+        if(employee.getSalary() <= 2500) {
+        	tax = employee.getSalary() * 0.1;
+        }else if(employee.getSalary() <= 5000) {
+        	tax = employee.getSalary() * 0.25;
+        }else if(employee.getSalary() > 5000) {
+        	tax = employee.getSalary() * 0.35;
+        }
+        return tax;
     }
     
     
@@ -42,7 +61,10 @@ public class Assignment2 {
         Implement this method to swap salaries of employees
     */
     public void swap(Employee firstEmployee, Employee secondEmployee) {
-        // @TODO
+        double temp = 0.0;
+        temp = firstEmployee.getSalary();
+        firstEmployee.setSalary(secondEmployee.getSalary());
+        secondEmployee.setSalary(temp);
     }
 
     
@@ -51,8 +73,13 @@ public class Assignment2 {
         Note: Employee array is passed, not employee
      */
     public int employeesAgeGreaterThan50(Employee[] employees) {
-        // @TODO
-        return 0;
+        int num = 0;
+        for(Employee i : employees) {
+        	if(i.getAge() > 50) {
+        		num += 1;
+        	}
+        }
+        return num;
     }
 
     
@@ -62,7 +89,9 @@ public class Assignment2 {
         After : employee.getFirstName() -> "nhoJ"
      */
     public void reverseFirstName(Employee employee) {
-        // @TODO
+        StringBuilder firstName = new StringBuilder(employee.getFirstName());
+        firstName = firstName.reverse();
+        employee.setFirstName(firstName.toString());
     }
 
     
@@ -73,7 +102,14 @@ public class Assignment2 {
         employee.getFirstName() -> "hail" == false
      */
     public void isContainDigit(Employee employee) {
-        // @TODO
+        String name = employee.getFirstName();
+        char[] c = name.toCharArray();
+        for(char i : c) {
+        	if(i == '1' || i == '2' || i == '3' || i == '4' || i == '5' || i == '6' || i == '7' || i =='8' || i == '9' || i == '0')
+        		System.out.println("false");
+        	return;
+        }
+        System.out.println("true");
     }
 
     
@@ -85,7 +121,7 @@ public class Assignment2 {
         Call this new method.
      */
     public void tripleSalary(Employee employee) {
-        // @TODO
+    	employee.raiseSalary(300);
     }
     
     
@@ -103,7 +139,22 @@ public class Assignment2 {
      */
     public Employee[] createEmployees(String[] employeesStr) {
         Employee[] employees = new Employee[employeesStr.length];
-        // @TODO
+        for(int i = 0; i < employeesStr.length; i ++) {
+        	String temp;
+        	int first = employeesStr[i].indexOf(",");
+        	temp = employeesStr[i].substring(0, first);
+        	employees[i].setId(Integer.parseInt(temp));
+        	int second = employeesStr[i].substring(first + 1).indexOf(",");
+        	temp = employeesStr[i].substring(first + 1, second);
+        	employees[i].setFirstName(temp);
+        	int third = employeesStr[i].substring(second + 1).indexOf(",");
+        	temp = employeesStr[i].substring(second + 1, third);
+        	employees[i].setAge(Integer.parseInt(temp));
+        	temp = employeesStr[i].substring(third + 1);
+        	employees[i].setSalary(Integer.parseInt(temp));
+        }
         return employees;
     }
+    
+    
 }
