@@ -8,7 +8,7 @@ public class Assignment2 {
         This method should return the sum of salaries of employees having salary greater than 5000
         Note: Employee array is passed, not employee
      */
-    public double salaryGreaterThanFiveThousand(Employee[] employees) {
+    public static double salaryGreaterThanFiveThousand(Employee[] employees) {
         double sum = 0.0;
         for(Employee i: employees) {
         	if(i.getSalary() > 5000) {
@@ -25,7 +25,7 @@ public class Assignment2 {
         "Buzz" - if id of employee is divisible by 5
         "FizzBuzz" - if id of employee is divisible by both 3 and 5
      */
-    public void fizzBuzz(Employee employee) {
+    public static void fizzBuzz(Employee employee) {
         int id = employee.getId();
         if(id % 3 == 0 && id % 5 == 0) {
         	System.out.println("FizzBuzz");
@@ -43,7 +43,7 @@ public class Assignment2 {
         If salary of employee is greater than 2500 but less than or equal to 5000, tax should be 25%
         If salary of employee is greater than 5000, tax should be 35%
     */
-    public double calculateTax(Employee employee) {
+    public static double calculateTax(Employee employee) {
         double tax = 0.0;
         if(employee.getSalary() <= 2500) {
         	tax = employee.getSalary() * 0.1;
@@ -137,24 +137,34 @@ public class Assignment2 {
         convert each string to employee object.
         Hint: Use String methods. Refer : https://docs.oracle.com/javase/7/docs/api/java/lang/String.html
      */
-    public Employee[] createEmployees(String[] employeesStr) {
+    public static Employee[] createEmployees(String[] employeesStr) {
         Employee[] employees = new Employee[employeesStr.length];
         for(int i = 0; i < employeesStr.length; i ++) {
-        	String temp;
+        	employees[i] = new Employee();
+        	String temp = "";
         	int first = employeesStr[i].indexOf(",");
+        	//System.out.println(first);
         	temp = employeesStr[i].substring(0, first);
         	employees[i].setId(Integer.parseInt(temp));
-        	int second = employeesStr[i].substring(first + 1).indexOf(",");
+        	int second = employeesStr[i].substring(first + 1).indexOf(",") + first + 1;
         	temp = employeesStr[i].substring(first + 1, second);
         	employees[i].setFirstName(temp);
-        	int third = employeesStr[i].substring(second + 1).indexOf(",");
+        	int third = employeesStr[i].substring(second + 1).indexOf(",") + second + 1;
         	temp = employeesStr[i].substring(second + 1, third);
         	employees[i].setAge(Integer.parseInt(temp));
         	temp = employeesStr[i].substring(third + 1);
-        	employees[i].setSalary(Integer.parseInt(temp));
+        	employees[i].setSalary(Double.parseDouble(temp));
         }
         return employees;
     }
     
+    public static void main(String[] args) {
+    	String[] employees = new String[]{"3,John,24,7500", "2,Hail,28,7899.90"};
+    	Employee[] emp = createEmployees(employees);
+    	System.out.println(salaryGreaterThanFiveThousand(emp));
+    	fizzBuzz(emp[0]);
+    	System.out.println(calculateTax(emp[1]));
+    	
+    }
     
 }
