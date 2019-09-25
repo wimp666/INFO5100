@@ -1,14 +1,14 @@
 import java.util.*;
 
 public class Course {
-	int courseId;
-	String courseName;
-	int maxCapacity;
-	int professorId;
-	int credits;
-	int[] studentIds;
+	private int courseId;
+	private String courseName;
+	private int maxCapacity;
+	private int professorId;
+	private int credits;
+	private int[] studentIds;
 	
-	int pointer = 0;
+	private int pointer = 0;
 	
 	public Course(int courseId) {
 		this.courseId = courseId;
@@ -83,6 +83,7 @@ public class Course {
 		studentIds[pointer++] = studentId;	
 	}
 	
+	//Q3
 	public int[] removeDuplicates(int[] studentIds) {
 		Set<Integer> hash = new HashSet<>();
 		for(int i : studentIds) {
@@ -97,6 +98,7 @@ public class Course {
 		return res;
 	}
 	
+	//Q4
 	public int groupsOfStudents(int[] studentIds) {
 		int len = studentIds.length;
 		int count = 0;
@@ -108,6 +110,7 @@ public class Course {
 		}
 		return count;
 	}
+	
 	
 	
 
