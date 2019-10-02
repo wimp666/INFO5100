@@ -5,7 +5,7 @@ class Candy extends DessertItem {
 	int weight;
 	
 	Candy(String name, double price, int weight) {
-		this.name = name;
+		this.name = price + " lbs. @ " +weight + " /lb. " + name;
 		this.pricePerPound = price;
 		this.weight = weight;
 	}
@@ -13,6 +13,6 @@ class Candy extends DessertItem {
 	@Override
 	public int getCost() {
 		// TODO Auto-generated method stub
-		return (int)this.pricePerPound * this.weight;
+		return (int) Math.round((this.pricePerPound * this.weight));
 	}
 }

@@ -12,7 +12,7 @@ public class Cookie extends DessertItem {
 	@Override
 	public int getCost() {
 		// TODO Auto-generated method stub
-		return this.num * this.price;
+		return this.num * this.price / 12;
 	}
 
 }

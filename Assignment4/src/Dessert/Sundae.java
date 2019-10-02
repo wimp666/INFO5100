@@ -1,6 +1,6 @@
 package Dessert;
 
-public class Sundae extends DessertItem {
+public class Sundae extends IceCream {
 	int cost;
 	
 	Sundae(String iceCreamName, int iceCreamCost, String toppingName, int toppingCost){
