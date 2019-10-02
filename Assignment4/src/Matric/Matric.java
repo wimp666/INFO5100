@@ -14,8 +14,10 @@ public class Matric {
 	public Matric multi(Matric B) {
 		Matric res = new Matric(new int[row][col]);
 		for(int i = 0; i < row; i++) {
-			for(int j = 0; j < col; j++) {
-				res.matric[i][j] += this.matric[i][j] * B.matric[j][i];
+			for(int j = 0; j < B.col; j++) {
+				for(int k = 0; k < col; k++) {
+					res.matric[i][j] += this.matric[i][k] * B.matric[k][j];
+				}
 			}
 		}
 		return res;
