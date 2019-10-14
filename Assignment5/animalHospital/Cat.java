@@ -2,6 +2,8 @@ package animalHospital;
 
 public class Cat extends Pet implements Boardable {
 	private String hairLength;
+	int startDay, startMonth, startYear;
+	int endDay, endMonth, endYear;
 	
 	public Cat (String name, String ownerName, String color, String hairLength){
 		super(name,  ownerName, color);
@@ -18,20 +20,28 @@ public class Cat extends Pet implements Boardable {
 
 	@Override
 	public void setBoardStart(int month, int day, int year) {
-		// TODO Auto-generated method stub
+		this.startDay = day;
+		this.startMonth = month;
+		this.startYear = year;
 
 	}
 
 	@Override
 	public void setBoardEnd(int month, int day, int year) {
-		// TODO Auto-generated method stub
+		this.endDay = day;
+		this.endMonth = month;
+		this.endYear = year;
 
 	}
 
 	@Override
 	public boolean boarding(int month, int day, int year) {
-		// TODO Auto-generated method stub
-		return false;
+		int startSum = this.startYear * 10000 + this.startMonth * 100 + this.startDay;
+		int endSum = this.endYear * 10000 + this.endMonth * 100 + this.endDay;
+		int curSum = year * 10000 + month * 100 + day;
+		if(curSum > endSum || curSum < startSum)
+			return false;
+		return true;
 	}
 
 }
