@@ -1,6 +1,22 @@
+import java.util.Arrays;
+
+import exceptions.MyIndexOutOfBoundException;
+
 public class Assignment5{
 	public static void main(String[] args) {
-		
+		int i = 520;
+		int[] arr = new int [100];
+		Arrays.fill(arr, 2);
+		try {
+			System.out.println("output arr[i]");
+			if(i >= 100 || i < 0) {
+				throw new MyIndexOutOfBoundException(0, 99, i);
+			}else {
+				System.out.println("arr[" + i + "] = " + arr[i]);
+			}
+		}catch (Exception ex) {
+	        System.out.println(ex);
+	    }
 	}
 	
 

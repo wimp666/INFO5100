@@ -5,7 +5,7 @@ public class MyIndexOutOfBoundException extends Exception {
 	int upperBound;
 	int index;
 	
-	MyIndexOutOfBoundException(int lowerBound, int upperBound, int index){
+	public MyIndexOutOfBoundException(int lowerBound, int upperBound, int index){
 		this.index = index;
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
