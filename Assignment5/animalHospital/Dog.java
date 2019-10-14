@@ -11,6 +11,9 @@ public class Dog extends Pet implements Boardable {
 	public String getSize() {
 		return this.size;
 	}
+	public String toString() {
+		return "DOG:" + "\n" + this.getPetName() + " owned by " + this.getOwnerName() + "\n" + "Color : " + this.getColor() + "\n" + "Sex : " + this.getSex() + "\n" + "Size : " + this.getSize();
+	}
 
 	@Override
 	public void setBoardStart(int month, int day, int year) {

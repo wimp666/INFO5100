@@ -11,6 +11,10 @@ public class Cat extends Pet implements Boardable {
 	public String getHairLength() {
 		return this.hairLength;
 	}
+	
+	public String toString() {
+		return "CAT:" + "\n" + this.getPetName() + " owned by " + this.getOwnerName() + "\n" + "Color : " + this.getColor() + "\n" + "Sex : " + this.getSex() + "\n" + "Hair : " + this.getHairLength();
+	}
 
 	@Override
 	public void setBoardStart(int month, int day, int year) {
