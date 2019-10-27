@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 /*
@@ -38,14 +40,29 @@ public class Assignment6 {
 	
 	//IV. Given an array of integers arr, write a function that returns true if and
 	//only if the number of occurrences of each value in the array is unique.
-	public boolean uniqueOccurrences(int[] arr) {
-		
+	public static boolean uniqueOccurrences(int[] arr) {
+		Map<Integer, Integer> occ = new HashMap<>();
+		for(int i : arr) {
+			occ.put(i, occ.getOrDefault(i, 0) + 1);
+		}
+		Set<Integer> val = new HashSet<>();
+		for(int i : occ.values()) {
+			if(val.contains(i)) {
+				return false;
+			}
+			val.add(i);
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) {
 		System.out.println(isAnagram("anagram", "nagaram"));
 		System.out.println(isAnagram("rat", "car"));
 		System.out.println(isAnagram("anagrama", "nagaram"));
-
+		System.out.println("Q4");
+		int[] arr1 = {1,2,2,1,1,3};
+		int[] arr2 = {1,2,2,1,3};
+		System.out.println(uniqueOccurrences(arr1));
+		System.out.println(uniqueOccurrences(arr2));
 	}
 }
