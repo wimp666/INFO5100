@@ -108,12 +108,6 @@ public class ContentPage extends JFrame {
 		
 		JButton btnClear = new JButton("Clear");
 		panel_6.add(btnClear);
-		
-		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3);
-		
-		JButton btnBackToMainpage = new JButton("Back To Mainpage");
-		panel_3.add(btnBackToMainpage);
 	}
 
 }
