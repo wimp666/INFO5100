@@ -36,10 +36,30 @@ public class ContentPage extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		rTextTop = new RichText();
+		rTextTop.plainText = "Header Data : ";
+		rTextTop.isBold = true;
+		rTextTop.isItalic = false;
+		rTextTop.fontSize = 12;
+		rTextBot = new RichText();
+		rTextBot.plainText = "Footer Data : ";
+		rTextBot.isBold = true;
+		rTextBot.isItalic = true;
+		rTextBot.fontSize = 13;
+		rTextLeft = new RichText();
+		rTextLeft.plainText = "Content 1 : ";
+		rTextLeft.isBold = false;
+		rTextLeft.isItalic = false;
+		rTextLeft.fontSize = 11;
+		rTextRight = new RichText();
+		rTextRight.plainText = "Content 2 : ";
+		rTextRight.isBold = false;
+		rTextRight.isItalic = true;
+		rTextRight.fontSize = 9;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ContentPage frame = new ContentPage();
+					ContentPage frame = new ContentPage(rTextTop, rTextBot, rTextLeft, rTextRight);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,12 +77,15 @@ public class ContentPage extends JFrame {
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_4, lblNewLabel_5;
 
 	private JButton btnSubmit, btnPreview, btnReset;
+	
+	JCheckBox chckbxIsBold, chckbxIsItalic;
 
+	static private RichText rTextTop, rTextBot, rTextLeft, rTextRight;
 	
 	/**
 	 * Create the frame.
 	 */
-	public ContentPage() {
+	public ContentPage(RichText rTextTop, RichText rTextBot, RichText rTextLeft, RichText rTextRight) {
 		setTitle("Content Editing");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 587, 502);
@@ -74,13 +97,13 @@ public class ContentPage extends JFrame {
 		newHeaderPanel();	
 		newContent_1Panel();
 		newContent_2Panel();
-		newFootenPanel();
+		newCenterPanel();
 		newCheckBoxAreaPanel();
 		newPositionComboBox();
 		newFontAreaPanel();
 		newPreviewAreaPanel();
 		newButtonAreaPanel();
-		newCenterPanel();
+		newFootenPanel();
 		
 	}
 	
@@ -91,7 +114,7 @@ public class ContentPage extends JFrame {
 		panel_Header.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		contentPane.add(panel_Header, BorderLayout.NORTH);
 		panel_Header.setLayout(new GridLayout(1, 2, 0, 0));
-		txtpnHeaderData.setText("Header Data : ");
+		txtpnHeaderData.setText(rTextTop.plainText);
 		panel_Header.add(txtpnHeaderData);
 	}
 	private void newContent_1Panel() {
@@ -101,7 +124,7 @@ public class ContentPage extends JFrame {
 		panel_Content_1.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		contentPane.add(panel_Content_1, BorderLayout.WEST);
 		panel_Content_1.setLayout(new GridLayout(0, 1, 0, 0));		
-		txtpnContent_1.setText("Content 1: ");
+		txtpnContent_1.setText(rTextLeft.plainText);
 		panel_Content_1.add(txtpnContent_1);
 	}
 	private void newContent_2Panel() {
@@ -111,17 +134,17 @@ public class ContentPage extends JFrame {
 		panel_Content_2.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		contentPane.add(panel_Content_2, BorderLayout.EAST);
 		panel_Content_2.setLayout(new GridLayout(0, 1, 0, 0));
-		txtpnContent_2.setText("Content 2: ");
+		txtpnContent_2.setText(rTextRight.plainText);
 		panel_Content_2.add(txtpnContent_2);
 	}
-	private void newFootenPanel() {
+	private void newCenterPanel() {
 		panel_Footen = new JPanel();
 		txtpnFootenData = new JTextPane();
 		
 		panel_Footen.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		contentPane.add(panel_Footen, BorderLayout.SOUTH);
+		contentPane.add(panel_Footen, BorderLayout.CENTER);
 		panel_Footen.setLayout(new GridLayout(0, 1, 0, 0));
-		txtpnFootenData.setText("Footen Data : ");
+		txtpnFootenData.setText(rTextBot.plainText);
 		panel_Footen.add(txtpnFootenData);
 	}
 	private void newFontAreaPanel() {
@@ -163,7 +186,6 @@ public class ContentPage extends JFrame {
 		btnReset = new JButton("Reset");
 		
 		panel_PreviewArea.setLayout(new BorderLayout(0, 0));
-		setTxtPaneText(txtpnPlaintext, txtpnHeaderData.getText(), txtpnHeaderData.getFont().isBold(), txtpnHeaderData.getFont().isItalic(), txtpnHeaderData.getFont().getSize() );
 		panel_PreviewArea.add(txtpnPlaintext, BorderLayout.CENTER);
 		btnSubmit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -186,21 +208,22 @@ public class ContentPage extends JFrame {
 		panel_ButtonArea.add(btnReset);
 		panel_ButtonArea.add(btnSubmit);
 	}
-	private void newCenterPanel() {
+	private void newFootenPanel() {
 		panel_Center = new JPanel();
 		panel_Center.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
-		contentPane.add(panel_Center, BorderLayout.CENTER);
+		contentPane.add(panel_Center, BorderLayout.SOUTH);
 		panel_Center.setLayout(new BorderLayout(0, 0));
 		panel_Center.add(panel_FontArea, BorderLayout.NORTH);
 		panel_Center.add(panel_ButtonArea, BorderLayout.SOUTH);
 		panel_Center.add(panel_PreviewArea, BorderLayout.CENTER);
+		initConfigData(rTextTop);
 	}
 	private void newCheckBoxAreaPanel() {
 		panel_CheckBoxArea = new JPanel();
 		panel_CheckBoxArea.setLayout(new GridLayout(0, 2, 0, 0));
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Is Bold");
-		panel_CheckBoxArea.add(chckbxNewCheckBox);
-		JCheckBox chckbxIsItalic = new JCheckBox("Is Italic");
+		chckbxIsBold = new JCheckBox("Is Bold");
+		panel_CheckBoxArea.add(chckbxIsBold);
+		chckbxIsItalic = new JCheckBox("Is Italic");
 		panel_CheckBoxArea.add(chckbxIsItalic);
 	}
 	private void newPositionComboBox() {
@@ -212,13 +235,13 @@ public class ContentPage extends JFrame {
 						case ItemEvent.SELECTED: 
 							String item = e.getItem().toString();
 							if(item.equals("Header Data")) {
-								setTxtPaneText(txtpnPlaintext, txtpnHeaderData.getText(), txtpnHeaderData.getFont().isBold(), txtpnHeaderData.getFont().isItalic(), txtpnHeaderData.getFont().getSize());
+								initConfigData(rTextTop);
 							}else if(item.equals("Content 1")) {
-								setTxtPaneText(txtpnPlaintext, txtpnContent_1.getText(), txtpnContent_1.getFont().isBold(), txtpnContent_1.getFont().isItalic(), txtpnContent_1.getFont().getSize());
+								initConfigData(rTextLeft);
 							}else if(item.equals("Content 2")) {
-								setTxtPaneText(txtpnPlaintext, txtpnContent_2.getText(), txtpnContent_2.getFont().isBold(), txtpnContent_2.getFont().isItalic(), txtpnContent_2.getFont().getSize());
-							}else if(item.equals("Footen Data")) {
-								setTxtPaneText(txtpnPlaintext, txtpnFootenData.getText(), txtpnFootenData.getFont().isBold(), txtpnFootenData.getFont().isItalic(), txtpnFootenData.getFont().getSize());
+								initConfigData(rTextRight);
+							}else if(item.equals("Footen Data")) {								
+								initConfigData(rTextBot);
 							}
 						break;
 					}
@@ -227,19 +250,32 @@ public class ContentPage extends JFrame {
 		comboBox_Position.setModel(new DefaultComboBoxModel(new String[] {"Header Data", "Content 1", "Content 2", "Footen Data"}));
 		
 	}
-	
-	public void setTxtPaneText(JTextPane textPane, String text, Boolean isBold, Boolean isItalic, int size) {
-		textPane.setText(text);
-		int temp = 0;		
+
+	public void initConfigData(RichText rText) {
+		Boolean isBold, isItalic;
+        int size;		
+		//int temp = 0;
+		
+		isBold = rText.isBold;
+		isItalic = rText.isItalic;
+		size = rText.fontSize;
+		
 		if(isBold) {
-			temp += Font.BOLD;
+			chckbxIsBold.setSelected(true);
+			//temp += Font.BOLD;
+		}else {
+			chckbxIsBold.setSelected(false);
 		}
 		if(isItalic) {
-			temp += Font.ITALIC;
+			chckbxIsItalic.setSelected(true);
+			//temp += Font.ITALIC;
+		}else {
+			chckbxIsItalic.setSelected(false);
 		}
-		Font f = new Font("Default", temp,size);
-		textPane.setFont(f);
+		txtpnPlaintext.setText(rText.plainText);
+		//Font f = new Font("Default", temp, size);
+		comboBox_Size.setSelectedItem("" + size);
 	}
-
+	
 	
 }
